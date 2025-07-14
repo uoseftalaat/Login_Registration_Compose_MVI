@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Task_prp</string>
+    <string name="password_icon_description">hide or show password</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="text_hint_textfield">input text here</string>
+    <string name="name_textField_title">Name*</string>
+    <string name="surname_textfield_title">Surname*</string>
+    <string name="email_textfield_title">Email*</string>
+    <string name="Sigu_up_page_title">Sign UP</string>
+    <string name="login_page_title">Log in</string>
+    <string name="login_page_subtitle">Please fill the details and Log in</string>
+    <string name="you_don_t_have_an_account">You don’t have an account?</string>
+    <string name="create_account">Create Account</string>
+    <string name="continue_button">Continue</string>
+</resources>

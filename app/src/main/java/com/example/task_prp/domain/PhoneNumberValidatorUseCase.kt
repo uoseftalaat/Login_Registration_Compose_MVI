@@ -1,0 +1,38 @@
+package com.example.task_prp.domain
+
+import com.google.i18n.phonenumbers.NumberParseException
+import com.google.i18n.phonenumbers.PhoneNumberUtil
+
+class PhoneNumberValidatorUseCase {
+    operator fun invoke(phoneNumber:String,countryCode:String):PhoneNumberValidationResults{
+        val phoneNumberUtil = PhoneNumberUtil.getInstance()
+
+        try {
+            val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(
+                countryCode.toInt()
+            )
+            val parsedNumber = phoneNumberUtil.parse(phoneNumber, regionCode)
+
+            val result = phoneNumberUtil.isValidNumberForRegion(parsedNumber, regionCode)
+
+            return if(result)
+                PhoneNumberValidationResults(true)
+                else
+                    PhoneNumberValidationResults(
+                false,
+                    "Phone number is not in a valid format"
+                )
+
+        } catch (e: NumberParseException) {
+            return PhoneNumberValidationResults(
+                false,
+                "Please enter numbers only"
+            )
+        }
+    }
+}
+
+data class PhoneNumberValidationResults(
+    var isPhoneValid:Boolean,
+    var errorMessage:String = ""
+)
