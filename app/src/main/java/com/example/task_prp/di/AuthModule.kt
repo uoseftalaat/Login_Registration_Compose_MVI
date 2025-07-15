@@ -11,6 +11,7 @@ import com.example.task_prp.domain.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.screen.countrypickerScreen.CountryPickerViewModel
 import com.example.task_prp.ui.screen.loginscreen.LoginViewModel
 import com.example.task_prp.ui.screen.signupscreen.SignUpViewModel
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -25,7 +26,9 @@ val authModule = module {
 
     single { PasswordValidatorUseCase() }
 
-    single { PhoneNumberValidatorUseCase() }
+    single { PhoneNumberUtil.getInstance() }
+
+    single { PhoneNumberValidatorUseCase(get()) }
 
 
     viewModel {

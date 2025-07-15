@@ -3,9 +3,11 @@ package com.example.task_prp.domain
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 
-class PhoneNumberValidatorUseCase {
+class PhoneNumberValidatorUseCase(
+    private val phoneNumberUtil: PhoneNumberUtil
+){
     operator fun invoke(phoneNumber:String,countryCode:String):PhoneNumberValidationResults{
-        val phoneNumberUtil = PhoneNumberUtil.getInstance()
+//        val phoneNumberUtil = PhoneNumberUtil.getInstance()
 
         try {
             val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(

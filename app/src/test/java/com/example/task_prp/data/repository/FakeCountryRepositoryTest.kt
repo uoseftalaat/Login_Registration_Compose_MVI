@@ -3,8 +3,7 @@ package com.example.task_prp.data.repository
 import com.example.task_prp.R
 import com.example.task_prp.data.Country
 
-class CountryRepositoryImpl:CountryRepository {
-
+class FakeCountryRepositoryTest : CountryRepository{
     private val countries = listOf(
         Country(0, R.drawable.egyptflag,"20","Egypt"),
         Country(1, R.drawable.saudiflag,"966","Saudi Arabia"),
@@ -22,4 +21,5 @@ class CountryRepositoryImpl:CountryRepository {
     override suspend fun getCountryById(id: Int): Country {
         return countries[id]
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.task_prp.ui.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -56,7 +58,8 @@ fun AppTextField(
             },
             modifier = Modifier
                 .fillMaxWidth(),
-            visualTransformation = if(isPasswordHidden) PasswordVisualTransformation() else VisualTransformation.None
+            visualTransformation = if(isPasswordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+            keyboardOptions = if(isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         Text(
             errorMessage,
