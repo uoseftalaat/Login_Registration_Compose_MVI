@@ -39,7 +39,9 @@ android {
         compose = true
     }
 }
-
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -82,5 +84,23 @@ dependencies {
 
     //serializable
     implementation(libs.kotlinx.serialization.json)
+
+    //mockito
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlin.mockito.kotlin)
+
+    //coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    //test
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(kotlin("test"))
+
 
 }

@@ -1,14 +1,14 @@
 package com.example.task_prp.domain
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class PasswordValidatorUseCaseTest {
 
     private lateinit var passwordValidatorUseCase: PasswordValidatorUseCase
 
-    @Before
+    @BeforeEach
     fun setup(){
         passwordValidatorUseCase = PasswordValidatorUseCase()
     }

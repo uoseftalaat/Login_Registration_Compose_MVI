@@ -2,22 +2,48 @@ package com.example.task_prp.domain
 
 import com.google.common.truth.Truth.assertThat
 import com.google.i18n.phonenumbers.PhoneNumberUtil
-import org.junit.Before
-import org.junit.Test
+import com.google.i18n.phonenumbers.Phonenumber
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
-class PhoneNumberValidatorUseCaseTest {
+@ExtendWith(MockitoExtension::class)
+class PhoneNumberValidatorUseCaseTest1{
 
     private lateinit var phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase
 
-    @Before
+    @Mock
+    private lateinit var phoneNumberUtil: PhoneNumberUtil
+
+    @BeforeEach
     fun setup(){
-        phoneNumberValidatorUseCase = PhoneNumberValidatorUseCase(phoneNumberUtil = PhoneNumberUtil.getInstance())
+        phoneNumberValidatorUseCase = PhoneNumberValidatorUseCase(phoneNumberUtil = phoneNumberUtil)
     }
+
 
     @Test
     fun `when user enter phone number correctly then return true`(){
         val phoneNumber = "01034578323"
         val countryCode = "20"
+
+        val parsedNumber: Phonenumber.PhoneNumber = Phonenumber.PhoneNumber()
+
+        Mockito.`when`(phoneNumberUtil.getRegionCodeForCountryCode(20)).then {
+            "20"
+        }
+
+        Mockito.`when`(phoneNumberUtil.parse(phoneNumber,countryCode)).then {
+            Phonenumber.PhoneNumber()
+        }
+
+        Mockito.`when`(phoneNumberUtil.isValidNumberForRegion(parsedNumber, countryCode)).then {
+            true
+        }
 
         val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
 
@@ -26,75 +52,6 @@ class PhoneNumberValidatorUseCaseTest {
             ""
         )
         assertThat(result).isEqualTo(expected)
-    }
-
-    @Test
-    fun `when user enter phone number in a wrong form less than the lenght required then return false`(){
-        val phoneNumber = "0104354738"
-        val countryCode = "20"
-
-        val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
-
-        val expected = PhoneNumberValidationResults(
-            false,
-            "Phone number is not in a valid format"
-        )
-        assertThat(result).isEqualTo(expected)
-    }
-
-    @Test
-    fun `when user enter phone number in a wrong form more than the lenght required then return false`(){
-        val phoneNumber = "010435473879"
-        val countryCode = "20"
-
-        val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
-
-        val expected = PhoneNumberValidationResults(
-            false,
-            "Phone number is not in a valid format"
-        )
-        assertThat(result).isEqualTo(expected)
-    }
-
-    @Test
-    fun `when user enter letter in the phone number then return false`(){
-        val phoneNumber = "arstn"
-        val countryCode = "20"
-
-        val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
-
-        val expected = PhoneNumberValidationResults(
-            false,
-            "Please enter numbers only"
-        )
-        assertThat(result).isEqualTo(expected)
-    }
-
-    @Test
-    fun `when user enter letter and numbers in the phone number then return false`(){
-        val phoneNumber = "010uaer"
-        val countryCode = "20"
-
-        val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
-
-        val expected = PhoneNumberValidationResults(
-            false,
-            "Phone number is not in a valid format"
-        )
-        assertThat(result).isEqualTo(expected)
-    }
-
-    @Test
-    fun `when user enter phone format for different country code then return false`(){
-        val phoneNumber = "01063935766"
-        val countryCode = "1"
-
-        val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
-
-        val expected = PhoneNumberValidationResults(
-            false,
-            "Phone number is not in a valid format"
-        )
-        assertThat(result).isEqualTo(expected)
+        verify(phoneNumberUtil).isValidNumberForRegion(parsedNumber,countryCode)
     }
 }

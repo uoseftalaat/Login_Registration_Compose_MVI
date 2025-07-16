@@ -1,15 +1,15 @@
 package com.example.task_prp.domain
 
-import org.junit.Test
 import com.google.common.truth.Truth.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class NameValidatorUseCaseTest {
 
 
     private lateinit var nameValidatorUseCase:NameValidatorUseCase
 
-    @Before
+    @BeforeEach
     fun before(){
         nameValidatorUseCase = NameValidatorUseCase()
     }
