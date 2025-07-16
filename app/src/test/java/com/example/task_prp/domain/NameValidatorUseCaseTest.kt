@@ -20,16 +20,26 @@ class NameValidatorUseCaseTest {
 
         val result = nameValidatorUseCase(name)
 
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                false,
+                "Name Must have at least 2 letters"
+            )
+        )
     }
 
     @Test
-    fun `when enter name lenght equals 2 letters then return false`(){
+    fun `when enter name lenght equals 2 letters then return true`(){
         val name = "Jo"
 
         val result = nameValidatorUseCase(name)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true,
+                ""
+            )
+        )
     }
 
     @Test
@@ -38,6 +48,11 @@ class NameValidatorUseCaseTest {
 
         val result = nameValidatorUseCase(name)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true,
+                ""
+            )
+        )
     }
 }

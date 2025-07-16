@@ -3,8 +3,12 @@ package com.example.task_prp.domain
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.kotlin.mock
 
 class PasswordValidatorUseCaseTest {
+
 
     private lateinit var passwordValidatorUseCase: PasswordValidatorUseCase
 
@@ -17,26 +21,42 @@ class PasswordValidatorUseCaseTest {
     fun `when enter password lenght less than 6 then returns false`(){
         val password = "Hallo"
 
+
         val result = passwordValidatorUseCase(password)
 
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                false,
+                "The minimum lenght for password is 6 characters"
+            )
+        )
     }
 
     @Test
     fun `when enter password lenght is equal 6 then returns false`(){
         val password = "Hallot"
 
+
         val result = passwordValidatorUseCase(password)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true
+            )
+        )
     }
 
     @Test
     fun `when enter password lenght is greater than 6 then returns false`(){
         val password = "arsthsf"
 
+
         val result = passwordValidatorUseCase(password)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true
+            )
+        )
     }
 }

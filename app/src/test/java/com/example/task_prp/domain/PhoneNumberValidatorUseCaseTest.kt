@@ -47,7 +47,7 @@ class PhoneNumberValidatorUseCaseTest1{
 
         val result = phoneNumberValidatorUseCase(phoneNumber,countryCode)
 
-        val expected = PhoneNumberValidationResults(
+        val expected = UseCaseResult(
             true,
             ""
         )

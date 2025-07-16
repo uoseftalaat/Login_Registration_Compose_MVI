@@ -19,7 +19,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                false,
+                "Please Enter a Valid Email Format"
+            )
+        )
     }
 
     @Test
@@ -28,7 +33,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                false,
+                "Please Enter a Valid Email Format"
+            )
+        )
     }
 
     @Test
@@ -37,7 +47,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                false,
+                "Please Enter a Valid Email Format"
+            )
+        )
     }
 
     @Test
@@ -46,7 +61,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true,
+                ""
+            )
+        )
     }
 
     @Test
@@ -55,7 +75,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true,
+                ""
+            )
+        )
     }
 
     @Test
@@ -64,7 +89,12 @@ class EmailValidatorUseCaseTest {
 
         val result = emailValidatorUseCase(email)
 
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(
+            UseCaseResult(
+                true,
+                ""
+            )
+        )
     }
 
 

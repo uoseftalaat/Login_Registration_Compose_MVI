@@ -7,7 +7,7 @@ import com.google.i18n.phonenumbers.Phonenumber
 class PhoneNumberValidatorUseCase(
     private val phoneNumberUtil: PhoneNumberUtil
 ){
-    operator fun invoke(phoneNumber:String,countryCode:String):PhoneNumberValidationResults{
+    operator fun invoke(phoneNumber:String,countryCode:String):UseCaseResult{
 
         try {
             val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(
@@ -18,23 +18,18 @@ class PhoneNumberValidatorUseCase(
             val result = phoneNumberUtil.isValidNumberForRegion(parsedNumber, regionCode)
 
             return if(result)
-                PhoneNumberValidationResults(true)
+                UseCaseResult(true)
                 else
-                    PhoneNumberValidationResults(
+                    UseCaseResult(
                 false,
                     "Phone number is not in a valid format"
                 )
 
         } catch (e: NumberParseException) {
-            return PhoneNumberValidationResults(
+            return UseCaseResult(
                 false,
                 "Please enter numbers only"
             )
         }
     }
 }
-
-data class PhoneNumberValidationResults(
-    var isPhoneValid:Boolean,
-    var errorMessage:String = ""
-)
