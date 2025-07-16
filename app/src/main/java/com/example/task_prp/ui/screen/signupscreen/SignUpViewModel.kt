@@ -10,6 +10,7 @@ import com.example.task_prp.data.Country
 import com.example.task_prp.data.repository.CountryRepository
 import com.example.task_prp.domain.EmailValidatorUseCase
 import com.example.task_prp.domain.NameValidatorUseCase
+import com.example.task_prp.domain.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
 import com.google.i18n.phonenumbers.NumberParseException
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
 
 class SignUpViewModel(
     private val repository: CountryRepository,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
+    private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
     private val emailValidatorUseCase: EmailValidatorUseCase,
     private val nameValidatorUseCase: NameValidatorUseCase
 ):BaseViewModel<
@@ -55,7 +57,7 @@ class SignUpViewModel(
 
     private fun validateAccountCreation() {
         validateNameSurName(currentState.name,currentState.surName)
-        validatePhoneNumber(currentState.phoneNumber)
+        validatePhoneNumber(currentState.phoneNumber,currentState.country)
         validateEmail(currentState.email)
 
         if(currentState.isEmailValid == true &&
@@ -140,47 +142,34 @@ class SignUpViewModel(
 
     private fun getCountryById(countryId: Int) = viewModelScope.launch {
         val country = repository.getCountryById(countryId)
-        setState { copy(country = country) }
+        setState { copy(country = country, countryId = countryId) }
     }
 
     private fun validateNameSurName(name: String, surName: String) {
-        val nameValid = nameValidatorUseCase(name)
-        val surNameValid = nameValidatorUseCase(surName)
+        val nameResult = nameValidatorUseCase(name)
+        val surNameResult = nameValidatorUseCase(surName)
         setState {
             copy(
-                isNameValid = nameValid,
-                isSurNameValid = surNameValid,
-                nameError = if (!nameValid) "Name Must have at least 2 letters" else "",
-                surNameError = if (!surNameValid) "SurName Must have at least 2 letters" else "",
+                isNameValid = nameResult.isEntryValid,
+                isSurNameValid = surNameResult.isEntryValid,
+                nameError = if (!nameResult.isEntryValid) "Name Must have at least 2 letters" else "",
+                surNameError = if (!nameResult.isEntryValid) "SurName Must have at least 2 letters" else "",
             )
         }
     }
 
     private fun validateEmail(email: String) {
-        val isValid = emailValidatorUseCase(email)
+        val result = emailValidatorUseCase(email)
         setState {
             copy(
-                isEmailValid = isValid,
-                emailError = if(!isValid) "Please Enter a Valid Email Format" else ""
+                isEmailValid = result.isEntryValid,
+                emailError = if(!result.isEntryValid) "Please Enter a Valid Email Format" else ""
             )
         }
     }
 
-    private fun validatePhoneNumber(phoneNumber: String) {
-        val country = currentState.country
-        val phoneNumberUtil = PhoneNumberUtil.getInstance()
-
-        try {
-            val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(country?.countryCode?.toInt() ?: 20)
-
-            val parsedNumber = phoneNumberUtil.parse(phoneNumber, regionCode)
-            if (phoneNumberUtil.isValidNumberForRegion(parsedNumber, regionCode)) {
-                setState { copy(isPhoneNumberValid = true, phoneError = "") }
-            } else {
-                setState { copy(isPhoneNumberValid = false, phoneError = "Phone number is not in a valid format") }
-            }
-        } catch (e: NumberParseException) {
-            setState { copy(isPhoneNumberValid = false,phoneError = "Please enter numbers only") }
-        }
+    private fun validatePhoneNumber(phoneNumber: String, country:Country?) {
+        val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "20")
+        setState { copy(isPhoneNumberValid = results.isEntryValid, phoneError = results.errorMessage) }
     }
 }

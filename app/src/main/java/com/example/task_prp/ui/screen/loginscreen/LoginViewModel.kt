@@ -6,12 +6,9 @@ import androidx.navigation.toRoute
 import com.example.task_prp.data.Country
 import com.example.task_prp.data.repository.CountryRepository
 import com.example.task_prp.domain.PasswordValidatorUseCase
-import com.example.task_prp.domain.PhoneNumberValidationResults
 import com.example.task_prp.domain.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
-import com.google.i18n.phonenumbers.NumberParseException
-import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -84,13 +81,11 @@ class LoginViewModel(
         }
     }
 
-    private fun onDefaultCountryChange(id:Int?) {
-        val countryId = id ?: currentState.countryId
-        viewModelScope.launch {
+    private fun onDefaultCountryChange(id:Int?) = viewModelScope.launch {
             val country = repository.getCountryById(id ?: 0)
             setState { copy(country = country, countryId = id ?: 0) }
-        }
     }
+
 
     private fun onCreateAccountClick(countryId: Int) = setEffect {
         LoginContract.LoginEffect.CreateAccount(countryId)
@@ -99,18 +94,12 @@ class LoginViewModel(
 
     private fun validatePhoneNumber(phoneNumber: String, country:Country?) {
         val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "20")
-        if(results.isPhoneValid)
-            setState {copy(isPhoneValid = true, phoneError = "") }
-        else
-            setState { copy(isPhoneValid = false, phoneError = results.errorMessage) }
+        setState { copy(isPhoneValid = results.isEntryValid, phoneError = results.errorMessage) }
     }
 
     private fun validatePassword(password:String){
-        val isPasswordValid = passwordValidatorUseCase(password)
-        if(isPasswordValid)
-            setState { copy(isPasswordValid = true, passwordError = "") }
-        else
-            setState { copy(isPasswordValid = false, passwordError = "The minimum lenght for password is 6 characters") }
+        val result = passwordValidatorUseCase(password)
+        setState { copy(isPasswordValid = result.isEntryValid, passwordError = result.errorMessage) }
     }
 
 }

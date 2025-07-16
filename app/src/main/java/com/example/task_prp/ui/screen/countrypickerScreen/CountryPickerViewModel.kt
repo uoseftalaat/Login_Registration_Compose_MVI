@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class CountryPickerViewModel(
     private val repository: CountryRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ):BaseViewModel<
         CountryPickerContract.CountryPickerState,
         CountryPickerContract.CountryPickerIntent,
@@ -25,7 +25,14 @@ class CountryPickerViewModel(
         subscribeIntents()
     }
 
-    private fun getCountries(selectedCountryId:Int){
+    override fun handleIntent(intent: CountryPickerContract.CountryPickerIntent) {
+        when(intent){
+            is CountryPickerContract.CountryPickerIntent.OnBackClick -> onBackClick()
+            is CountryPickerContract.CountryPickerIntent.OnCountryClick -> onCountryButtonClick(intent.countryId)
+        }
+    }
+
+    fun getCountries(selectedCountryId:Int){
         setState { copy(isLoading = true) }
         viewModelScope.launch {
             val countries = repository.getAllCountries()
@@ -38,13 +45,6 @@ class CountryPickerViewModel(
 
     override fun createInitialState(): CountryPickerContract.CountryPickerState {
         return CountryPickerContract.CountryPickerState()
-    }
-
-    override fun handleIntent(intent: CountryPickerContract.CountryPickerIntent) {
-        when(intent){
-            is CountryPickerContract.CountryPickerIntent.OnBackClick -> onBackClick()
-            is CountryPickerContract.CountryPickerIntent.OnCountryClick -> onCountryButtonClick(intent.countryId)
-        }
     }
 
     private fun onBackClick() {

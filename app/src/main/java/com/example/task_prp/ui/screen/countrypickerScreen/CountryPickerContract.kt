@@ -16,7 +16,7 @@ class CountryPickerContract {
         val isLoading:Boolean = true,
         val countries:List<Country> = listOf(),
         val selectedCountryID:Int = 0
-    ):UiState
+    ) :UiState
 
     sealed class CountryPickerEffect:UiEffect{
         data class BackButtonClick(val countryId:Int):CountryPickerEffect()
