@@ -1,4 +1,4 @@
-package com.example.task_prp.ui.common
+package com.example.task_prp.ui.common.button
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.fillMaxWidth
