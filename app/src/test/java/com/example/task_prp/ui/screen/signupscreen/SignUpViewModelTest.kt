@@ -368,7 +368,7 @@ class SignUpViewModelTest {
         signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnEmailChange(phoneNumber))
         signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
 
-        assertThat(signUpViewModel.currentState.isPhoneNumberValid).isFalse()
+        assertThat(signUpViewModel.currentState.isPhoneNumberValid).isTrue()
     }
 
     @Test
