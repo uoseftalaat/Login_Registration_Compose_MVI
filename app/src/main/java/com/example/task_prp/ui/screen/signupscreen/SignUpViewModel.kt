@@ -152,8 +152,8 @@ class SignUpViewModel(
             copy(
                 isNameValid = nameResult.isEntryValid,
                 isSurNameValid = surNameResult.isEntryValid,
-                nameError = if (!nameResult.isEntryValid) "Name Must have at least 2 letters" else "",
-                surNameError = if (!nameResult.isEntryValid) "SurName Must have at least 2 letters" else "",
+                nameError = if (!nameResult.isEntryValid) nameResult.errorMessage else "",
+                surNameError = if (!nameResult.isEntryValid) surNameResult.errorMessage else "",
             )
         }
     }
@@ -163,7 +163,7 @@ class SignUpViewModel(
         setState {
             copy(
                 isEmailValid = result.isEntryValid,
-                emailError = if(!result.isEntryValid) "Please Enter a Valid Email Format" else ""
+                emailError = if(!result.isEntryValid) result.errorMessage else ""
             )
         }
     }

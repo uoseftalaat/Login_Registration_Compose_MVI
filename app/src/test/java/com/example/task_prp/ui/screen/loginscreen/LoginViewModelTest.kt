@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import com.example.task_prp.R
+import com.example.task_prp.domain.UseCaseResult
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 
@@ -59,6 +60,190 @@ class LoginViewModelTest {
         loginViewModel.setIntent(LoginContract.LoginIntent.OnPasswordChange(password))
 
         assertThat(loginViewModel.currentState.password).isEqualTo(password)
+    }
+
+    @Test
+    fun `when user enters password in valid way -more than 6 letters- then isPasswordValid = true`(){
+        val password = "areeb@345"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPasswordChange(password))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.isPasswordValid).isTrue()
+
+    }
+
+    @Test
+    fun `when user enters password in valid way -more than 6 letters- then passwordError empty`(){
+        val password = "c@345"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPasswordChange(password))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.passwordError).isEmpty()
+
+    }
+
+    @Test
+    fun `when user enters invalid password  -less than 6 letters- then isPasswordValid = false`(){
+        val password = "reeb@"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPasswordChange(password))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.isPasswordValid).isFalse()
+    }
+
+    @Test
+    fun `when user enters invalid password -less than 6 letters- then passwordError has error message`(){
+        val password = "reeb@"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "the password is wrong"
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPasswordChange(password))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.passwordError).isEqualTo(
+            "the password is wrong"
+        )
+    }
+
+    @Test
+    fun `when user enters valid phone number then phoneError isEmpty`(){
+        val phoneNumber = "0105734"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPhoneNumberChange(phoneNumber))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.phoneError).isEqualTo(
+            ""
+        )
+    }
+
+    @Test
+    fun `when user enters valid phone number then isPhoneNumberValid true`(){
+        val phoneNumber = "0105734"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPhoneNumberChange(phoneNumber))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.isPhoneValid).isTrue()
+    }
+
+    @Test
+    fun `when user enters invalid phone number then isPhoneNumberValid true`(){
+        val phoneNumber = "0105734"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "the phone is not valid"
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPhoneNumberChange(phoneNumber))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.isPhoneValid).isFalse()
+    }
+
+    @Test
+    fun `when user enters invalid phone number then phoneError has message`(){
+        val phoneNumber = "0105734"
+
+        Mockito.`when`(passwordValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "the phone is not valid"
+            )
+        }
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnPhoneNumberChange(phoneNumber))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnLoginClick)
+
+        assertThat(loginViewModel.currentState.phoneError).isEqualTo(
+            "the phone is not valid"
+        )
     }
 
     @Test

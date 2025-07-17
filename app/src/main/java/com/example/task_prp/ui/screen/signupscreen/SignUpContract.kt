@@ -15,7 +15,7 @@ class SignUpContract{
         data class OnPhoneNumberChange(val newPhoneNumber:String):SignUpIntent()
         data class OnCountryPickClick(val countryId: Int):SignUpIntent()
         data class OnBackButtonClick(val countryId: Int):SignUpIntent()
-        data class OnConfirmClick(val countryId: Int):SignUpIntent()
+        data object OnConfirmClick:SignUpIntent()
     }
 
     data class SignupState(

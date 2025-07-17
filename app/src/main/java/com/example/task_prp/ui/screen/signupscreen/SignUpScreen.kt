@@ -159,7 +159,7 @@ fun SignUpContent(
                 "Confirm",
                 state.isCreateAccountButtonEnabled,
             ) {
-                setIntent(SignUpContract.SignUpIntent.OnConfirmClick(state.country?.id ?: 0))
+                setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
             }
         }
     }

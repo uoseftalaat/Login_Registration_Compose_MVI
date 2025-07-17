@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import com.example.task_prp.R
+import com.example.task_prp.domain.UseCaseResult
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 
@@ -225,4 +226,177 @@ class SignUpViewModelTest {
         )
     }
 
+    @Test
+    fun `when enters name and the name is valid then isNameValid = true`(){
+        val name = "uosef"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnNameChange(name))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.isNameValid).isTrue()
+    }
+
+    @Test
+    fun `when enters name and the name is invalid then nameError should has error message `(){
+        val name = "uosef"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "errorMessage"
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnNameChange(name))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.nameError).isEqualTo("errorMessage")
+    }
+
+    @Test
+    fun `when enters invalid email then emailError should has error message `(){
+        val email = "uosef"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnEmailChange(email))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.emailError).isEqualTo("error")
+    }
+
+    @Test
+    fun `when enters invalid email then isEmailValid = false `(){
+        val email = "uosef"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnEmailChange(email))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.isEmailValid).isFalse()
+    }
+
+    @Test
+    fun `when enters invalid phoneNumber then isPhoneNumberValid = false `(){
+        val phoneNumber = "0100"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnEmailChange(phoneNumber))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.isPhoneNumberValid).isFalse()
+    }
+
+    @Test
+    fun `when enters invalid phoneNumber then phoneError should has error message`(){
+        val phoneNumber = "0100"
+
+        Mockito.`when`(nameValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(emailValidatorUseCase(Mockito.anyString())).then {
+            UseCaseResult(
+                true,
+                ""
+            )
+        }
+        Mockito.`when`(phoneNumberValidatorUseCase(Mockito.anyString(),Mockito.anyString())).then {
+            UseCaseResult(
+                false,
+                "error"
+            )
+        }
+
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnEmailChange(phoneNumber))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
+
+        assertThat(signUpViewModel.currentState.phoneError).isEqualTo("error")
+    }
 }
