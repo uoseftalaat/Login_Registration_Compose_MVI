@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +24,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.task_prp.R
 import com.example.task_prp.data.Country
 import com.example.task_prp.ui.common.AppButton
-import com.example.task_prp.ui.common.AppPhoneField
-import com.example.task_prp.ui.common.AppTextField
+import com.example.task_prp.ui.common.textfield.AppPhoneField
+import com.example.task_prp.ui.common.textfield.AppTextField
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

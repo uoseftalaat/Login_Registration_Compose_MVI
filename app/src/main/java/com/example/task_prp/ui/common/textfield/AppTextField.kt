@@ -1,4 +1,4 @@
-package com.example.task_prp.ui.common
+package com.example.task_prp.ui.common.textfield
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -13,21 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.task_prp.R
 import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepositoryImpl
 import com.example.task_prp.ui.common.AppButton
-import com.example.task_prp.ui.common.AppPhoneField
-import com.example.task_prp.ui.common.AppTextField
+import com.example.task_prp.ui.common.textfield.AppPhoneField
+import com.example.task_prp.ui.common.textfield.AppTextField
 import com.example.task_prp.ui.common.AppTitleField
-import com.example.task_prp.ui.screen.loginscreen.LoginContract
-import kotlinx.coroutines.flow.Flow
 import org.koin.compose.viewmodel.koinViewModel
 
 
