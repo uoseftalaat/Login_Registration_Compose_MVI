@@ -3,8 +3,21 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
+    id("com.apollographql.apollo") version "4.3.1"
 }
+apollo{
+    service("service"){
+        packageName.set("com.example.task_prp")
 
+        introspection {
+
+            endpointUrl.set("https://countries.trevorblades.com/graphql")
+
+            schemaFile.set(file("src/main/graphql/com/example/schema.graphqls"))
+
+        }
+    }
+}
 android {
     namespace = "com.example.task_prp"
     compileSdk = 36
@@ -105,6 +118,9 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(kotlin("test"))
+
+    //graphql
+    implementation(libs.apollo.runtime)
 
 
 }
