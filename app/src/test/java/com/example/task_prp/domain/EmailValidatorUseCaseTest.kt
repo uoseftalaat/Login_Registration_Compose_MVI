@@ -1,12 +1,14 @@
 package com.example.task_prp.domain
 
+import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.UseCaseResult
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class EmailValidatorUseCaseTest {
 
-    private lateinit var emailValidatorUseCase:EmailValidatorUseCase
+    private lateinit var emailValidatorUseCase: EmailValidatorUseCase
 
     @BeforeEach
     fun setup(){

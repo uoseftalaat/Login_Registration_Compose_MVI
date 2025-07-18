@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.task_prp.R
-import com.example.task_prp.data.Country
+import com.example.task_prp.data.remote.Country
 import com.example.task_prp.ui.common.button.AppButton
 import com.example.task_prp.ui.common.textfield.AppPhoneField
 import com.example.task_prp.ui.common.textfield.AppTextField

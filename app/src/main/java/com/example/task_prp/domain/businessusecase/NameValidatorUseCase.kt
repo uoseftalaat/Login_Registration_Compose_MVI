@@ -1,7 +1,7 @@
-package com.example.task_prp.domain
+package com.example.task_prp.domain.businessusecase
 
 class NameValidatorUseCase {
-    operator fun invoke(name:String):UseCaseResult{
+    operator fun invoke(name:String): UseCaseResult {
         return if(name.length >= 2) UseCaseResult(
             true,
             ""

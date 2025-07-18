@@ -2,8 +2,8 @@ package com.example.task_prp.ui.screen.countrypickerScreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
+import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.repository.CountryRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

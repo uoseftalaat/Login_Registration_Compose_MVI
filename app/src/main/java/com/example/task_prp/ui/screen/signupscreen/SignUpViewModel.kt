@@ -1,20 +1,15 @@
 package com.example.task_prp.ui.screen.signupscreen
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.toRoute
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
-import com.example.task_prp.domain.EmailValidatorUseCase
-import com.example.task_prp.domain.NameValidatorUseCase
-import com.example.task_prp.domain.PhoneNumberValidatorUseCase
+import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.NameValidatorUseCase
+import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
-import com.google.i18n.phonenumbers.NumberParseException
-import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
@@ -168,7 +163,7 @@ class SignUpViewModel(
         }
     }
 
-    private fun validatePhoneNumber(phoneNumber: String, country:Country?) {
+    private fun validatePhoneNumber(phoneNumber: String, country: Country?) {
         val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "20")
         setState { copy(isPhoneNumberValid = results.isEntryValid, phoneError = results.errorMessage) }
     }

@@ -1,4 +1,4 @@
-package com.example.task_prp.domain
+package com.example.task_prp.domain.businessusecase
 
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -7,7 +7,7 @@ import com.google.i18n.phonenumbers.Phonenumber
 class PhoneNumberValidatorUseCase(
     private val phoneNumberUtil: PhoneNumberUtil
 ){
-    operator fun invoke(phoneNumber:String,countryCode:String):UseCaseResult{
+    operator fun invoke(phoneNumber:String,countryCode:String): UseCaseResult {
 
         try {
             val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(

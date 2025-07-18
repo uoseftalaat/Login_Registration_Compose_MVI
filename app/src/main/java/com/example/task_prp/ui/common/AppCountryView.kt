@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.task_prp.R
-import com.example.task_prp.data.Country
+import com.example.task_prp.data.remote.Country
 
 @Composable
 fun AppCountryCode(

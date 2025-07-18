@@ -1,11 +1,10 @@
 package com.example.task_prp.domain
 
+import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
+import com.example.task_prp.domain.businessusecase.UseCaseResult
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.kotlin.mock
 
 class PasswordValidatorUseCaseTest {
 

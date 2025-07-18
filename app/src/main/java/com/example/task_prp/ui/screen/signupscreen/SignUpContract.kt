@@ -1,6 +1,6 @@
 package com.example.task_prp.ui.screen.signupscreen
 
-import com.example.task_prp.data.Country
+import com.example.task_prp.data.remote.Country
 import com.example.task_prp.ui.screen.base.UiEffect
 import com.example.task_prp.ui.screen.base.UiIntent
 import com.example.task_prp.ui.screen.base.UiState
@@ -23,7 +23,7 @@ class SignUpContract{
         val surName:String = "",
         val email:String = "",
         val phoneNumber:String = "",
-        val country:Country? = null,
+        val country: Country? = null,
         val countryId:Int? = null,
         val isNameValid:Boolean? = null,
         val isSurNameValid:Boolean? = null,

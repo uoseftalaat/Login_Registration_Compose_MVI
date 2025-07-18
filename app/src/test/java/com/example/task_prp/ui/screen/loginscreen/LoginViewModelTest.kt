@@ -2,10 +2,10 @@ package com.example.task_prp.ui.screen.loginscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
-import com.example.task_prp.domain.PasswordValidatorUseCase
-import com.example.task_prp.domain.PhoneNumberValidatorUseCase
+import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
+import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import com.example.task_prp.R
-import com.example.task_prp.domain.UseCaseResult
+import com.example.task_prp.domain.businessusecase.UseCaseResult
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 

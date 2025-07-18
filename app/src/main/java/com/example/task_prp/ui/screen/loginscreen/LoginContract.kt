@@ -1,7 +1,6 @@
 package com.example.task_prp.ui.screen.loginscreen
 
-import com.example.task_prp.R
-import com.example.task_prp.data.Country
+import com.example.task_prp.data.remote.Country
 import com.example.task_prp.ui.screen.base.UiEffect
 import com.example.task_prp.ui.screen.base.UiIntent
 import com.example.task_prp.ui.screen.base.UiState
@@ -22,7 +21,7 @@ class LoginContract {
     data class LoginState(
         val phoneNumber:String = "",
         val countryId:Int = 0,
-        val country:Country? = null,
+        val country: Country? = null,
         val password:String = "",
         val passwordError:String = "",
         val phoneError:String = "",

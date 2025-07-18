@@ -1,6 +1,6 @@
 package com.example.task_prp.ui.screen.countrypickerScreen
 
-import com.example.task_prp.data.Country
+import com.example.task_prp.data.remote.Country
 import com.example.task_prp.ui.screen.base.UiEffect
 import com.example.task_prp.ui.screen.base.UiIntent
 import com.example.task_prp.ui.screen.base.UiState

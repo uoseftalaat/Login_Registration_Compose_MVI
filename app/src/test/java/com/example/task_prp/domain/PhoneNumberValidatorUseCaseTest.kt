@@ -1,5 +1,7 @@
 package com.example.task_prp.domain
 
+import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.businessusecase.UseCaseResult
 import com.google.common.truth.Truth.assertThat
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 @ExtendWith(MockitoExtension::class)

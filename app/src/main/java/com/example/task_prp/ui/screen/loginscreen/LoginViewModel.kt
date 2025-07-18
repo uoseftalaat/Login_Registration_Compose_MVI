@@ -3,10 +3,10 @@ package com.example.task_prp.ui.screen.loginscreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
-import com.example.task_prp.domain.PasswordValidatorUseCase
-import com.example.task_prp.domain.PhoneNumberValidatorUseCase
+import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
+import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -92,7 +92,7 @@ class LoginViewModel(
     }
 
 
-    private fun validatePhoneNumber(phoneNumber: String, country:Country?) {
+    private fun validatePhoneNumber(phoneNumber: String, country: Country?) {
         val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "20")
         setState { copy(isPhoneValid = results.isEntryValid, phoneError = results.errorMessage) }
     }
