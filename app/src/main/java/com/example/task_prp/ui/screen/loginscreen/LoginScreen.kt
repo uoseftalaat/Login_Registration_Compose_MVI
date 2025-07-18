@@ -22,17 +22,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.task_prp.R
-import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.ui.common.button.AppButton
 import com.example.task_prp.ui.common.textfield.AppPhoneField
 import com.example.task_prp.ui.common.textfield.AppTextField
+import com.example.task_prp.ui.connectivity.ConnectivityObserver
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun LoginScreen(
-    countryId:Int?,
-    onPickFlagClick:(Int) -> Unit,
-    onSignUpClick:(Int) -> Unit,
+    countryId:String?,
+    onPickFlagClick:(String) -> Unit,
+    onSignUpClick:(String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = koinViewModel<LoginViewModel>()
@@ -44,9 +45,9 @@ fun LoginScreen(
         viewModel.setIntent(LoginContract.LoginIntent.OnDefaultCountryChange(countryId))
         effect.collect{ event ->
             when(event){
-                is LoginContract.LoginEffect.CountryPickerClick -> onPickFlagClick(event.countryId)
+                is LoginContract.LoginEffect.CountryPickerClick -> onPickFlagClick(event.countryCode)
                 LoginContract.LoginEffect.Login -> Toast.makeText(context,"login",Toast.LENGTH_SHORT).show()
-                is LoginContract.LoginEffect.CreateAccount -> onSignUpClick(event.countryId)
+                is LoginContract.LoginEffect.CreateAccount -> onSignUpClick(event.countryCode)
             }
         }
     }
@@ -63,7 +64,6 @@ fun LoginContent(
     state:LoginContract.LoginState,
     setIntent: (LoginContract.LoginIntent) -> Unit,
 ) {
-
     Column (
         modifier.padding(horizontal = 16.dp)
     ){
@@ -86,16 +86,16 @@ fun LoginContent(
         AppPhoneField(
             state.phoneNumber,
             country = state.country ?: Country(
-                0,
-                R.drawable.outline_flag_24,
+                "",
+                "",
                 "",
                 ""
             ),
             onValueChange = { phoneNumber ->
                 setIntent(LoginContract.LoginIntent.OnPhoneNumberChange(phoneNumber))
             },
-            onPickFlagClick = { countryId ->
-                setIntent(LoginContract.LoginIntent.OnCountryPickerClick(countryId))
+            onPickFlagClick = { countryCode ->
+                setIntent(LoginContract.LoginIntent.OnCountryPickerClick(countryCode))
             },
             isError = state.isPhoneValid?.not() ?: false,
             errorMessage = state.phoneError
@@ -139,7 +139,7 @@ fun LoginContent(
             )
             TextButton(
                 {
-                    setIntent(LoginContract.LoginIntent.OnCreateAccountClick(state.countryId))
+                    setIntent(LoginContract.LoginIntent.OnCreateAccountClick(state.countryCode ?: "EG"))
                 }
             ) {
                 Text(

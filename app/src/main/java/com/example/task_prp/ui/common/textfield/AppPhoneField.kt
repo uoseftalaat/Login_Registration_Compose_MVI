@@ -1,6 +1,5 @@
 package com.example.task_prp.ui.common.textfield
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,19 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.task_prp.R
-import com.example.task_prp.data.remote.Country
+import androidx.compose.ui.unit.sp
+import com.example.task_prp.domain.model.Country
+
 
 @Composable
 fun AppPhoneField(
     phoneNumber:String,
     country: Country,
     onValueChange:(String) ->Unit,
-    onPickFlagClick:(Int) -> Unit,
+    onPickFlagClick:(String) -> Unit,
     isError:Boolean = false,
     errorMessage:String = ""
 ) {
@@ -58,16 +57,20 @@ fun AppPhoneField(
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            onPickFlagClick(country.id)
+                            onPickFlagClick(country.countryCode)
                         }
                 ) {
-                    Image(
-                        painter = painterResource(country.icon),
-                        contentDescription = "${country.countryName} flag image"
+//                    Image(
+//                        painter = painterResource(country.icon),
+//                        contentDescription = "${country.countryName} flag image"
+//                    )
+                    Text(
+                        text = country.icon,
+                        fontSize = 25.sp
                     )
 
                     Text(
-                        text = "+" + country.countryCode
+                        text = "+" + country.dialCode
                     )
 
                     Icon(
@@ -95,10 +98,10 @@ private fun Preview() {
     AppPhoneField(
         "",
         Country(
-            0,
-            R.drawable.egyptflag,
+            "EG",
             "20",
-            "Egypt"
+            "Egypt",
+            "\uD83C\uDDE6\uD83C\uDDEA"
         ),
         {},
         {}

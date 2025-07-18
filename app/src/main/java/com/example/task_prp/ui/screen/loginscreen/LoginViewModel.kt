@@ -1,21 +1,25 @@
 package com.example.task_prp.ui.screen.loginscreen
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.task_prp.data.remote.Country
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
 import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.model.Country
+import com.example.task_prp.ui.connectivity.ConnectivityObserver
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val repository: CountryRepository,
     savedStateHandle: SavedStateHandle,
-    val passwordValidatorUseCase: PasswordValidatorUseCase,
-    val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase
+    private val passwordValidatorUseCase: PasswordValidatorUseCase,
+    private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
+    private val connectionObserver:ConnectivityObserver
 ): BaseViewModel<
         LoginContract.LoginState,
         LoginContract.LoginIntent,
@@ -27,8 +31,8 @@ class LoginViewModel(
     }
 
     init {
-        val countryId = savedStateHandle.toRoute<Navigation.Login>().countryId
-        setState { copy(countryId = countryId) }
+        val countryId = savedStateHandle.toRoute<Navigation.Login>().countryCode
+        setState { copy(countryCode = countryId) }
         subscribeIntents()
     }
 
@@ -40,14 +44,14 @@ class LoginViewModel(
 
             LoginContract.LoginIntent.OnShowPasswordClick -> onPasswordVisibilityIconClick()
 
-            is LoginContract.LoginIntent.OnCountryPickerClick -> onCountryPickerClick(intent.countryId)
+            is LoginContract.LoginIntent.OnCountryPickerClick -> onCountryPickerClick(intent.countryCode)
 
             LoginContract.LoginIntent.OnLoginClick -> onLoginButtonClick()
 
-            is LoginContract.LoginIntent.OnDefaultCountryChange -> onDefaultCountryChange(intent.countryId ?: currentState.countryId)
+            is LoginContract.LoginIntent.OnDefaultCountryChange -> onDefaultCountryChange(intent.countryCode ?: currentState.countryCode)
 
 
-            is LoginContract.LoginIntent.OnCreateAccountClick -> onCreateAccountClick(intent.countryId)
+            is LoginContract.LoginIntent.OnCreateAccountClick -> onCreateAccountClick(intent.countryCode)
         }
     }
 
@@ -65,7 +69,7 @@ class LoginViewModel(
         setState { copy(isPasswordHidden = !isPasswordHidden) }
     }
 
-    private fun onCountryPickerClick(countryId: Int){
+    private fun onCountryPickerClick(countryId: String){
         setEffect {
             LoginContract.LoginEffect.CountryPickerClick(countryId)
         }
@@ -81,19 +85,19 @@ class LoginViewModel(
         }
     }
 
-    private fun onDefaultCountryChange(id:Int?) = viewModelScope.launch {
-            val country = repository.getCountryById(id ?: 0)
-            setState { copy(country = country, countryId = id ?: 0) }
+    private fun onDefaultCountryChange(countryCode:String?) = viewModelScope.launch {
+            val country = repository.getCountryById(countryCode ?: "EG")
+            setState { copy(country = country, countryCode = countryCode ?: "EG") }
     }
 
 
-    private fun onCreateAccountClick(countryId: Int) = setEffect {
-        LoginContract.LoginEffect.CreateAccount(countryId)
+    private fun onCreateAccountClick(countryCode: String) = setEffect {
+        LoginContract.LoginEffect.CreateAccount(countryCode)
     }
 
 
     private fun validatePhoneNumber(phoneNumber: String, country: Country?) {
-        val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "20")
+        val results = phoneNumberValidatorUseCase(phoneNumber,country?.countryCode ?: "EG")
         setState { copy(isPhoneValid = results.isEntryValid, phoneError = results.errorMessage) }
     }
 

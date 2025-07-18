@@ -3,7 +3,7 @@ package com.example.task_prp.ui.screen.countrypickerScreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
@@ -20,7 +20,7 @@ class CountryPickerViewModel(
 {
 
     init {
-        val id = savedStateHandle.toRoute<Navigation.CountryPicker>().countryId
+        val id = savedStateHandle.toRoute<Navigation.CountryPicker>().countryCode
         getCountries(id)
         subscribeIntents()
     }
@@ -28,16 +28,16 @@ class CountryPickerViewModel(
     override fun handleIntent(intent: CountryPickerContract.CountryPickerIntent) {
         when(intent){
             is CountryPickerContract.CountryPickerIntent.OnBackClick -> onBackClick()
-            is CountryPickerContract.CountryPickerIntent.OnCountryClick -> onCountryButtonClick(intent.countryId)
+            is CountryPickerContract.CountryPickerIntent.OnCountryClick -> onCountryButtonClick(intent.countryCode)
         }
     }
 
-    fun getCountries(selectedCountryId:Int){
+    fun getCountries(selectedCountryCode:String){
         setState { copy(isLoading = true) }
         viewModelScope.launch {
             val countries = repository.getAllCountries()
             countries.forEach {
-                    country: Country ->  country.isPicked = country.id == selectedCountryId
+                    country: Country ->  country.isPicked = country.countryCode == selectedCountryCode
             }
             setState { copy(countries = countries , isLoading = false) }
         }
@@ -51,16 +51,16 @@ class CountryPickerViewModel(
         currentState.countries.forEach { country: Country ->
             if(country.isPicked)
                 setEffect {
-                    CountryPickerContract.CountryPickerEffect.BackButtonClick(country.id)
+                    CountryPickerContract.CountryPickerEffect.BackButtonClick(country.countryCode)
                 }
         }
 
     }
 
-    private fun onCountryButtonClick(countryId:Int){
-        setState { copy(selectedCountryID = countryId) }
+    private fun onCountryButtonClick(countryCode:String){
+        setState { copy(selectedCountryCode = countryCode) }
         setEffect {
-            CountryPickerContract.CountryPickerEffect.CountrySelected(countryId)
+            CountryPickerContract.CountryPickerEffect.CountrySelected(countryCode)
         }
     }
 

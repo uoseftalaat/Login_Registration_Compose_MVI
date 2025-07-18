@@ -3,11 +3,11 @@ package com.example.task_prp.ui.screen.signupscreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.task_prp.data.remote.Country
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
 import com.example.task_prp.domain.businessusecase.NameValidatorUseCase
 import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -25,8 +25,8 @@ class SignUpViewModel(
     (){
 
     init {
-        val countryId = savedStateHandle.toRoute<Navigation.SignUp>().countryId
-        setState { copy(countryId = countryId) }
+        val countryCode = savedStateHandle.toRoute<Navigation.SignUp>().countryCode
+        setState { copy(countryCode = countryCode) }
         subscribeIntents()
     }
     override fun createInitialState(): SignUpContract.SignupState {
@@ -35,18 +35,18 @@ class SignUpViewModel(
 
     override fun handleIntent(intent: SignUpContract.SignUpIntent) {
         when(intent){
-            is SignUpContract.SignUpIntent.OnBackButtonClick -> onBackButtonClick(intent.countryId)
+            is SignUpContract.SignUpIntent.OnBackButtonClick -> onBackButtonClick(intent.countryCode)
             is SignUpContract.SignUpIntent.OnConfirmClick -> validateAccountCreation()
-            is SignUpContract.SignUpIntent.OnCountryPickClick -> onCountryPickClick(intent.countryId)
+            is SignUpContract.SignUpIntent.OnCountryPickClick -> onCountryPickClick(intent.countryCode)
             is SignUpContract.SignUpIntent.OnEmailChange -> onEmailChange(intent.newEmail)
             is SignUpContract.SignUpIntent.OnNameChange -> onNameChange(intent.newName)
             is SignUpContract.SignUpIntent.OnPhoneNumberChange -> onPhoneNumberChange(intent.newPhoneNumber)
             is SignUpContract.SignUpIntent.OnSurNameChange -> onSurNameChange(intent.newSurName)
-            is SignUpContract.SignUpIntent.OnFlagChange -> onDefaultCountryChange(intent.countryId)
+            is SignUpContract.SignUpIntent.OnFlagChange -> onDefaultCountryChange(intent.countryCode)
         }
     }
 
-    private fun onBackButtonClick(countryId: Int) = setEffect {
+    private fun onBackButtonClick(countryId: String) = setEffect {
         SignUpContract.SignUpEffect.OnBackButtonClick(countryId)
     }
 
@@ -61,13 +61,13 @@ class SignUpViewModel(
             currentState.isPhoneNumberValid == true
         )
             setEffect{
-                SignUpContract.SignUpEffect.OnCreateAccountClick(currentState.country?.id ?: 0)
+                SignUpContract.SignUpEffect.OnCreateAccountClick(currentState.country?.countryCode ?: "EG")
             }
 
     }
 
-    private fun onCountryPickClick(countryId: Int) = setEffect{
-        SignUpContract.SignUpEffect.OnCountryPickClick(countryId)
+    private fun onCountryPickClick(countryCode: String) = setEffect{
+        SignUpContract.SignUpEffect.OnCountryPickClick(countryCode)
     }
 
     private fun onEmailChange(newEmail:String) {
@@ -130,14 +130,14 @@ class SignUpViewModel(
         }
     }
 
-    private fun onDefaultCountryChange(countryId: Int?) {
-        val id = countryId ?: currentState.countryId
-        getCountryById(id ?: 0)
+    private fun onDefaultCountryChange(countryCode: String?) {
+        val id = countryCode ?: currentState.countryCode
+        getCountryById(countryCode ?: id ?: "EG")
     }
 
-    private fun getCountryById(countryId: Int) = viewModelScope.launch {
-        val country = repository.getCountryById(countryId)
-        setState { copy(country = country, countryId = countryId) }
+    private fun getCountryById(countryCode: String) = viewModelScope.launch {
+        val country = repository.getCountryById(countryCode)
+        setState { copy(country = country, countryCode = countryCode) }
     }
 
     private fun validateNameSurName(name: String, surName: String) {

@@ -1,6 +1,6 @@
 package com.example.task_prp.ui.screen.countrypickerScreen
 
-import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.ui.screen.base.UiEffect
 import com.example.task_prp.ui.screen.base.UiIntent
 import com.example.task_prp.ui.screen.base.UiState
@@ -8,18 +8,18 @@ import com.example.task_prp.ui.screen.base.UiState
 class CountryPickerContract {
 
     sealed class CountryPickerIntent:UiIntent{
-        data class OnBackClick(val countryId: Int):CountryPickerIntent()
-        data class OnCountryClick(val countryId:Int):CountryPickerIntent()
+        data class OnBackClick(val countryCode: String):CountryPickerIntent()
+        data class OnCountryClick(val countryCode:String):CountryPickerIntent()
     }
 
     data class CountryPickerState(
-        val isLoading:Boolean = true,
+        val isLoading:Boolean = false,
         val countries:List<Country> = listOf(),
-        val selectedCountryID:Int = 0
+        val selectedCountryCode:String = "",
     ) :UiState
 
     sealed class CountryPickerEffect:UiEffect{
-        data class BackButtonClick(val countryId:Int):CountryPickerEffect()
-        data class CountrySelected(val countryID:Int):CountryPickerEffect()
+        data class BackButtonClick(val countryCode:String):CountryPickerEffect()
+        data class CountrySelected(val countryCode:String):CountryPickerEffect()
     }
 }

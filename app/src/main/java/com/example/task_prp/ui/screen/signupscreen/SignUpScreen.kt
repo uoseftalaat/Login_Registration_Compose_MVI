@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.task_prp.R
-import com.example.task_prp.data.remote.Country
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.ui.common.button.AppButton
 import com.example.task_prp.ui.common.textfield.AppPhoneField
 import com.example.task_prp.ui.common.textfield.AppTextField
@@ -27,11 +27,11 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    id:Int?,
+    id:String?,
     modifier: Modifier = Modifier,
-    onPickFlagClick: (Int) -> Unit,
-    onBackClicked: (Int) -> Unit,
-    onConfirmButtonClick: (Int) -> Unit
+    onPickFlagClick: (String) -> Unit,
+    onBackClicked: (String) -> Unit,
+    onConfirmButtonClick: (String) -> Unit
 ) {
     val context = LocalContext.current
     val viewModel = koinViewModel<SignUpViewModel>()
@@ -41,11 +41,11 @@ fun SignUpScreen(
         viewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(id))
         viewModel.effect.collect{ event ->
             when(event){
-                is SignUpContract.SignUpEffect.OnBackButtonClick -> onBackClicked(event.countryId)
-                is SignUpContract.SignUpEffect.OnCountryPickClick -> onPickFlagClick(event.countryId)
+                is SignUpContract.SignUpEffect.OnBackButtonClick -> onBackClicked(event.countryCode)
+                is SignUpContract.SignUpEffect.OnCountryPickClick -> onPickFlagClick(event.countryCode)
                 is SignUpContract.SignUpEffect.OnCreateAccountClick -> {
                     Toast.makeText(context,"Account Created",Toast.LENGTH_SHORT).show()
-                    onConfirmButtonClick(event.countryId)
+                    onConfirmButtonClick(event.countryCode)
                 }
             }
         }
@@ -73,7 +73,7 @@ fun SignUpContent(
         AppTitleField(
             stringResource(R.string.Sigu_up_page_title)
         ) {
-            setIntent(SignUpContract.SignUpIntent.OnBackButtonClick(state.country?.id ?: 0))
+            setIntent(SignUpContract.SignUpIntent.OnBackButtonClick(state.country?.countryCode ?: "EG"))
         }
 
         Column(
@@ -131,16 +131,16 @@ fun SignUpContent(
             AppPhoneField(
                 state.phoneNumber,
                 state.country ?: Country(
-                    0,
-                    R.drawable.outline_flag_24,
                     "",
                     "",
+                    "",
+                    ""
                 ),
                 onValueChange = { phoneNumber ->
                     setIntent(SignUpContract.SignUpIntent.OnPhoneNumberChange(phoneNumber))
                 },
                 onPickFlagClick= {
-                    setIntent(SignUpContract.SignUpIntent.OnCountryPickClick(state.country?.id ?: 0))
+                    setIntent(SignUpContract.SignUpIntent.OnCountryPickClick(state.country?.countryCode ?: "EG"))
                 },
                 isError = state.isPhoneNumberValid?.not() ?: false,
                 errorMessage = state.phoneError
