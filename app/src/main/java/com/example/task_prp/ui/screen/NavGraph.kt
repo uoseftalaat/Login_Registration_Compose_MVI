@@ -23,7 +23,7 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
     NavHost(navController,Navigation.Login()) {
         composable<Navigation.Login>
         {
-            val id = it.savedStateHandle.remove<Int>("selected_country_id")
+            val id = it.savedStateHandle.remove<String>("selected_country_id")
             LoginScreen(
                 id,
                 onPickFlagClick = { countryId ->
@@ -38,7 +38,7 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
 
         composable<Navigation.SignUp>
         {
-            val id = it.savedStateHandle.remove<Int>("selected_country_id")
+            val id = it.savedStateHandle.remove<String>("selected_country_id")
             SignUpScreen(
                 id = id,
                 onPickFlagClick = { countryId ->
@@ -58,12 +58,12 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         {
             CountryPickerScreen(
                 modifier = modifier,
-                onBackClicked = { countryId ->
-                    navController.previousBackStackEntry?.savedStateHandle?.set("selected_country_id", countryId)
+                onBackClicked = { countryCode ->
+                    navController.previousBackStackEntry?.savedStateHandle?.set("selected_country_id", countryCode)
                     navController.popBackStack()
                 },
-                onCountrySelected = { countryId ->
-                    navController.previousBackStackEntry?.savedStateHandle?.set("selected_country_id", countryId)
+                onCountrySelected = { countryCode ->
+                    navController.previousBackStackEntry?.savedStateHandle?.set("selected_country_id", countryCode)
                     navController.popBackStack()
                 }
             )

@@ -15,9 +15,6 @@ abstract class BaseViewModel<State:UiState,Intent:UiIntent,Effect:UiEffect>: Vie
     abstract fun createInitialState() : State
     private val initialState : State by lazy { createInitialState() }
 
-//    init {
-//        subscribeIntents()
-//    }
 
     private val _uiState : MutableStateFlow<State> = MutableStateFlow(initialState)
     val uiState = _uiState.asStateFlow()

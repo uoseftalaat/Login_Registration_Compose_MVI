@@ -1,6 +1,6 @@
 package com.example.task_prp.ui.screen.signupscreen
 
-import com.example.task_prp.data.Country
+import com.example.task_prp.domain.model.Country
 import com.example.task_prp.ui.screen.base.UiEffect
 import com.example.task_prp.ui.screen.base.UiIntent
 import com.example.task_prp.ui.screen.base.UiState
@@ -11,10 +11,10 @@ class SignUpContract{
         data class OnNameChange(val newName:String):SignUpIntent()
         data class OnSurNameChange(val newSurName:String):SignUpIntent()
         data class OnEmailChange(val newEmail:String):SignUpIntent()
-        data class OnFlagChange(val countryId: Int?):SignUpIntent()
+        data class OnFlagChange(val countryCode: String?):SignUpIntent()
         data class OnPhoneNumberChange(val newPhoneNumber:String):SignUpIntent()
-        data class OnCountryPickClick(val countryId: Int):SignUpIntent()
-        data class OnBackButtonClick(val countryId: Int):SignUpIntent()
+        data class OnCountryPickClick(val countryCode: String):SignUpIntent()
+        data class OnBackButtonClick(val countryCode: String):SignUpIntent()
         data object OnConfirmClick:SignUpIntent()
     }
 
@@ -23,8 +23,8 @@ class SignUpContract{
         val surName:String = "",
         val email:String = "",
         val phoneNumber:String = "",
-        val country:Country? = null,
-        val countryId:Int? = null,
+        val country: Country? = null,
+        val countryCode:String? = null,
         val isNameValid:Boolean? = null,
         val isSurNameValid:Boolean? = null,
         val isEmailValid:Boolean? = null,
@@ -41,8 +41,8 @@ class SignUpContract{
     ):UiState
 
     sealed class SignUpEffect:UiEffect{
-        data class OnCreateAccountClick(val countryId:Int):SignUpEffect()
-        data class OnBackButtonClick(val countryId: Int):SignUpEffect()
-        data class OnCountryPickClick(val countryId: Int):SignUpEffect()
+        data class OnCreateAccountClick(val countryCode:String):SignUpEffect()
+        data class OnBackButtonClick(val countryCode: String):SignUpEffect()
+        data class OnCountryPickClick(val countryCode: String):SignUpEffect()
     }
 }

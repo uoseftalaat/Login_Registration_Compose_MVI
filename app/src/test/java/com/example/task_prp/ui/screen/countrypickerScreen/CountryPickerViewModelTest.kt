@@ -2,8 +2,7 @@ package com.example.task_prp.ui.screen.countrypickerScreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
+import com.example.task_prp.domain.repository.CountryRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
-import com.example.task_prp.R
+import com.example.task_prp.domain.model.Country
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 
@@ -49,7 +48,7 @@ class CountryPickerViewModelTest {
             }
         }
 
-        countryViewModel.getCountries(1)
+        countryViewModel.getCountries("EG")
 
         assertThat(countryViewModel.currentState.countries).isEqualTo(
             countries
@@ -57,18 +56,15 @@ class CountryPickerViewModelTest {
     }
 
     @Test
-    fun `when user clicks on country then selectedCountryId should change correspondingly`(){
+    fun `when user clicks on country then selectedCountryCode should change correspondingly`(){
         val country = Country(
-            2,
-            R.drawable.egyptflag,
-            "20",
-            "Egypt"
+            "EG"
         )
 
-        countryViewModel.setIntent(CountryPickerContract.CountryPickerIntent.OnCountryClick(countryId = country.id))
+        countryViewModel.setIntent(CountryPickerContract.CountryPickerIntent.OnCountryClick(countryCode = country.countryCode))
 
-        assertThat(countryViewModel.currentState.selectedCountryID).isEqualTo(
-            country.id
+        assertThat(countryViewModel.currentState.selectedCountryCode).isEqualTo(
+            country.countryCode
         )
     }
 }

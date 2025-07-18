@@ -6,16 +6,16 @@ import kotlinx.serialization.Serializable
 sealed class Navigation{
     @Serializable
     data class Login(
-        val countryId:Int = 0
+        val countryCode:String = "EG"
     )
 
     @Serializable
     data class SignUp(
-        val countryId:Int = 0
+        val countryCode:String = "EG"
     )
 
     @Serializable
     data class CountryPicker(
-        val countryId: Int = 0
+        val countryCode:String = "EG"
     )
 }

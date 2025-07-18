@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,8 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.task_prp.R
-import com.example.task_prp.data.Country
+import com.example.task_prp.domain.model.Country
 
 @Composable
 fun AppCountryCode(
@@ -35,16 +38,21 @@ fun AppCountryCode(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .fillMaxWidth()
+                .height(50.dp)
                 .padding(8.dp)
         ) {
-            Image(
-                painter = painterResource(country.icon),
-                contentDescription = "flag for ${country.countryName}",
-                modifier = Modifier.padding(8.dp)
+//            Image(
+//                painter = painterResource(country.icon),
+//                contentDescription = "flag for ${country.countryName}",
+//                modifier = Modifier.padding(8.dp)
+//            )
+            Text(
+                text = country.icon,
+                fontSize = 25.sp
             )
 
             Text(
-                text = "+" + country.countryCode,
+                text = "+" + country.dialCode,
                 color = Color.Gray
             )
 
@@ -80,11 +88,10 @@ fun PickedIcon(
 private fun Preview() {
     AppCountryCode(
         Country(
-            0,
-            icon = R.drawable.egyptflag,
-            countryCode = "20",
-            countryName = "Egypt",
-            true
+            "EG",
+            "20",
+            "EGYPT",
+            "\uD83C\uDDE6\uD83C\uDDEA"
         )
     ){
 

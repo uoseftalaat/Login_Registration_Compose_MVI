@@ -2,11 +2,10 @@ package com.example.task_prp.ui.screen.signupscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.data.Country
-import com.example.task_prp.data.repository.CountryRepository
-import com.example.task_prp.domain.EmailValidatorUseCase
-import com.example.task_prp.domain.NameValidatorUseCase
-import com.example.task_prp.domain.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.NameValidatorUseCase
+import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.BeforeEach
@@ -14,8 +13,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import com.example.task_prp.R
-import com.example.task_prp.domain.UseCaseResult
+import com.example.task_prp.domain.businessusecase.UseCaseResult
+import com.example.task_prp.domain.model.Country
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 
@@ -177,22 +176,19 @@ class SignUpViewModelTest {
     @Test
     fun `when country change then country state should change correspondingly`(){
         val country = Country(
-            2,
-            R.drawable.egyptflag,
-            "20",
-            "Egypt"
+
         )
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyInt())).then {
+            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
                 country
             }
         }
 
-        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.id))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.countryCode))
 
         runBlocking {
-            Mockito.verify(repository).getCountryById(country.id)
+            Mockito.verify(repository).getCountryById(country.countryCode)
         }
 
         assertThat(signUpViewModel.currentState.country).isEqualTo(
@@ -203,26 +199,23 @@ class SignUpViewModelTest {
     @Test
     fun `when country change then countryId state should change correspondingly`(){
         val country = Country(
-            2,
-            R.drawable.egyptflag,
-            "20",
-            "Egypt"
+            "EG"
         )
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyInt())).then {
+            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
                 country
             }
         }
 
-        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.id))
+        signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.countryCode))
 
         runBlocking {
-            Mockito.verify(repository).getCountryById(country.id)
+            Mockito.verify(repository).getCountryById(country.countryCode)
         }
 
-        assertThat(signUpViewModel.currentState.countryId).isEqualTo(
-            country.id
+        assertThat(signUpViewModel.currentState.countryCode).isEqualTo(
+            country.countryCode
         )
     }
 
