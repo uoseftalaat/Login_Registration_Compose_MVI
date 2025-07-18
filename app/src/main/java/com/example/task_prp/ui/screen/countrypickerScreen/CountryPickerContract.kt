@@ -16,6 +16,7 @@ class CountryPickerContract {
         val isLoading:Boolean = false,
         val countries:List<Country> = listOf(),
         val selectedCountryCode:String = "",
+        val isInternetConnected:Boolean? = null
     ) :UiState
 
     sealed class CountryPickerEffect:UiEffect{

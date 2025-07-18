@@ -1,28 +1,31 @@
 package com.example.task_prp.ui.screen.countrypickerScreen
 
 
-import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.task_prp.R
 import com.example.task_prp.ui.common.AppCountryCode
 import com.example.task_prp.ui.common.AppTitleField
-import com.example.task_prp.ui.screen.loginscreen.LoginContract
-import org.checkerframework.checker.units.qual.Current
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -55,23 +58,27 @@ fun ContentChooser(
     state: CountryPickerContract.CountryPickerState,
     setIntent: (CountryPickerContract.CountryPickerIntent) -> Unit,
     ) {
-    if(!state.isLoading){
-        CountryPickerContent(
-            modifier,
-            state,
-            setIntent
-        )
+    if (state.isInternetConnected == true) {
+        if (!state.isLoading) {
+            CountryPickerContent(
+                modifier,
+                state,
+                setIntent
+            )
+        } else {
+            Box(
+                modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary,
+                    strokeWidth = 4.dp
+                )
+            }
+        }
     }
     else{
-        Box(
-            modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ){
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 4.dp
-            )
-        }
+        NoInternetView(modifier)
     }
 }
 
@@ -101,5 +108,29 @@ fun CountryPickerContent(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun NoInternetView(modifier: Modifier = Modifier) {
+    Column(
+        modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(R.drawable.wifi),
+            contentDescription = "internet is not connected icon"
+        )
+
+        Spacer(
+            Modifier.size(20.dp)
+        )
+
+        Text(
+            "The internet is not connected",
+            fontSize = 16.sp,
+            color = Color.Red
+        )
     }
 }

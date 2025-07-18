@@ -1,7 +1,6 @@
 package com.example.task_prp.ui.screen.loginscreen
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.task_prp.domain.repository.CountryRepository
@@ -16,9 +15,9 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val repository: CountryRepository,
-    savedStateHandle: SavedStateHandle,
     private val passwordValidatorUseCase: PasswordValidatorUseCase,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
+    savedStateHandle: SavedStateHandle,
 ): BaseViewModel<
         LoginContract.LoginState,
         LoginContract.LoginIntent,

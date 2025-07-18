@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import com.example.task_prp.R
 import com.example.task_prp.domain.businessusecase.UseCaseResult
 import com.example.task_prp.domain.model.Country
+import com.example.task_prp.ui.connectivity.ConnectivityObserver
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 
@@ -40,9 +41,9 @@ class LoginViewModelTest {
     fun setup(){
         loginViewModel = LoginViewModel(
             repository,
-            savedStateHandle,
             passwordValidatorUseCase,
-            phoneNumberValidatorUseCase
+            phoneNumberValidatorUseCase,
+            savedStateHandle
         )
     }
 
