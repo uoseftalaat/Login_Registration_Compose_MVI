@@ -1,16 +1,20 @@
 package com.example.task_prp.ui.screen.countrypickerScreen
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.task_prp.domain.model.Country
 import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.ui.connectivity.ConnectivityObserver
 import com.example.task_prp.ui.screen.Navigation
 import com.example.task_prp.ui.screen.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CountryPickerViewModel(
     private val repository: CountryRepository,
+    private val connectionObserver:ConnectivityObserver,
     savedStateHandle: SavedStateHandle
 ):BaseViewModel<
         CountryPickerContract.CountryPickerState,
@@ -18,11 +22,12 @@ class CountryPickerViewModel(
         CountryPickerContract.CountryPickerEffect
         >()
 {
-
+    val id = savedStateHandle.toRoute<Navigation.CountryPicker>().countryCode
     init {
-        val id = savedStateHandle.toRoute<Navigation.CountryPicker>().countryCode
+
         getCountries(id)
         subscribeIntents()
+        onConnectionStarts()
     }
 
     override fun handleIntent(intent: CountryPickerContract.CountryPickerIntent) {
@@ -64,4 +69,10 @@ class CountryPickerViewModel(
         }
     }
 
+    private fun onConnectionStarts() = viewModelScope.launch(Dispatchers.IO) {
+        connectionObserver.connectionObserver().collect {
+            setState { copy(isInternetConnected = it == ConnectivityObserver.ConnectionStatus.Connected) }
+            getCountries(id)
+        }
+    }
 }

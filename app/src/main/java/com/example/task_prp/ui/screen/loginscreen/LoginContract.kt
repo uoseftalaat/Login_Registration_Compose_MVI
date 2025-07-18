@@ -31,7 +31,7 @@ class LoginContract {
         val isPhoneEmpty:Boolean = true,
         val isPasswordEmpty:Boolean = true,
         val isPasswordHidden:Boolean = true,
-        val isProcessButtonEnabled: Boolean = false,
+        val isProcessButtonEnabled:Boolean = false
     ):UiState
 
     sealed class LoginEffect:UiEffect{
