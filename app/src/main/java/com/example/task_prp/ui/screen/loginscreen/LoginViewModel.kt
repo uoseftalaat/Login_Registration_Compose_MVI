@@ -19,7 +19,6 @@ class LoginViewModel(
     savedStateHandle: SavedStateHandle,
     private val passwordValidatorUseCase: PasswordValidatorUseCase,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
-    private val connectionObserver:ConnectivityObserver
 ): BaseViewModel<
         LoginContract.LoginState,
         LoginContract.LoginIntent,

@@ -2,7 +2,6 @@ package com.example.task_prp.ui.screen.loginscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.data.remote.Country
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
 import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
@@ -15,6 +14,7 @@ import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import com.example.task_prp.R
 import com.example.task_prp.domain.businessusecase.UseCaseResult
+import com.example.task_prp.domain.model.Country
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito
 
@@ -297,18 +297,18 @@ class LoginViewModelTest {
 
     @Test
     fun `when user changes country from country picker then country state showed be changed correspondingly`(){
-        val country = Country(0,R.drawable.egyptflag,"20","Egypt")
+        val country = Country()
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyInt())).then {
+            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
                 country
             }
         }
 
-        loginViewModel.setIntent(LoginContract.LoginIntent.OnDefaultCountryChange(country.id))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnDefaultCountryChange(country.countryCode))
 
         runBlocking {
-            Mockito.verify(repository).getCountryById(country.id)
+            Mockito.verify(repository).getCountryById(country.countryCode)
         }
 
         assertThat(loginViewModel.currentState.country).isEqualTo(
@@ -318,23 +318,23 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `when user changes country from country picker then countryId state showed be changed correspondingly`(){
-        val country = Country(0,R.drawable.egyptflag,"20","Egypt")
+    fun `when user changes country from country picker then countryCode state showed be changed correspondingly`(){
+        val country = Country("EG")
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyInt())).then {
+            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
                 country
             }
         }
 
-        loginViewModel.setIntent(LoginContract.LoginIntent.OnDefaultCountryChange(country.id))
+        loginViewModel.setIntent(LoginContract.LoginIntent.OnDefaultCountryChange(country.countryCode))
 
         runBlocking {
-            Mockito.verify(repository).getCountryById(country.id)
+            Mockito.verify(repository).getCountryById(country.countryCode)
         }
 
-        assertThat(loginViewModel.currentState.countryId).isEqualTo(
-            country.id
+        assertThat(loginViewModel.currentState.countryCode).isEqualTo(
+            country.countryCode
         )
     }
 }
