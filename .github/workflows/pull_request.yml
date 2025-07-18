@@ -16,8 +16,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+
       - name: makes gradlew executable
         run: chmod +x ./gradlew
+
       - name: enabling gradle cache
         uses: gradle/gradle-build-action@v2
         with:
