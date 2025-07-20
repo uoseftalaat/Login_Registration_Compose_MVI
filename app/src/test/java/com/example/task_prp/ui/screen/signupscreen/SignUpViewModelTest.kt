@@ -3,9 +3,9 @@ package com.example.task_prp.ui.screen.signupscreen
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
 import com.example.task_prp.domain.repository.CountryRepository
-import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
-import com.example.task_prp.domain.businessusecase.NameValidatorUseCase
-import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.BeforeEach
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import com.example.task_prp.domain.businessusecase.UseCaseResult
+import com.example.task_prp.domain.businessusecase.validator.UseCaseResult
 import com.example.task_prp.domain.model.Country
 import kotlinx.coroutines.runBlocking
 import org.mockito.Mockito

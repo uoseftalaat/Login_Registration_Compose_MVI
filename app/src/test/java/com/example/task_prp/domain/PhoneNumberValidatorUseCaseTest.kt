@@ -1,7 +1,7 @@
 package com.example.task_prp.domain
 
-import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
-import com.example.task_prp.domain.businessusecase.UseCaseResult
+import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.UseCaseResult
 import com.google.common.truth.Truth.assertThat
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber

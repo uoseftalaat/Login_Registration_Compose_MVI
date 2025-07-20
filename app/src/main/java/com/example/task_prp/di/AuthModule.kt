@@ -4,11 +4,11 @@ import com.apollographql.apollo.ApolloClient
 import com.example.task_prp.data.remote.datasource.CountryRemoteDataSource
 import com.example.task_prp.data.remote.datasource.CountryRemoteDataSourceImpl
 import com.example.task_prp.domain.repository.CountryRepository
-import com.example.task_prp.domain.repository.CountryRepositoryImpl
-import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
-import com.example.task_prp.domain.businessusecase.NameValidatorUseCase
-import com.example.task_prp.domain.businessusecase.PasswordValidatorUseCase
-import com.example.task_prp.domain.businessusecase.PhoneNumberValidatorUseCase
+import com.example.task_prp.data.remote.repository.CountryRepositoryImpl
+import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.PasswordValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
 import com.example.task_prp.ui.connectivity.ConnectionObserverImpl
 import com.example.task_prp.ui.connectivity.ConnectivityObserver
 import com.example.task_prp.ui.screen.countrypickerScreen.CountryPickerViewModel

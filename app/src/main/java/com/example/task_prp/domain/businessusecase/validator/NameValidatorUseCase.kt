@@ -1,4 +1,4 @@
-package com.example.task_prp.domain.businessusecase
+package com.example.task_prp.domain.businessusecase.validator
 
 class NameValidatorUseCase {
     operator fun invoke(name:String): UseCaseResult {

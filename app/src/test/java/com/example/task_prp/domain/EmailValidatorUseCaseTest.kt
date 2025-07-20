@@ -1,7 +1,7 @@
 package com.example.task_prp.domain
 
-import com.example.task_prp.domain.businessusecase.EmailValidatorUseCase
-import com.example.task_prp.domain.businessusecase.UseCaseResult
+import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
+import com.example.task_prp.domain.businessusecase.validator.UseCaseResult
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
