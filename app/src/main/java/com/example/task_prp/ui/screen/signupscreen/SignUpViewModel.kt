@@ -3,6 +3,7 @@ package com.example.task_prp.ui.screen.signupscreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
@@ -13,11 +14,11 @@ import com.example.task_prp.ui.screen.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val repository: CountryRepository,
-    savedStateHandle: SavedStateHandle,
+    private val getCountryByCountryCode: GetCountryByCountryCode,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
     private val emailValidatorUseCase: EmailValidatorUseCase,
-    private val nameValidatorUseCase: NameValidatorUseCase
+    private val nameValidatorUseCase: NameValidatorUseCase,
+    savedStateHandle: SavedStateHandle,
 ):BaseViewModel<
         SignUpContract.SignupState,
         SignUpContract.SignUpIntent,
@@ -136,7 +137,7 @@ class SignUpViewModel(
     }
 
     private fun getCountryById(countryCode: String) = viewModelScope.launch {
-        val country = repository.getCountryById(countryCode)
+        val country = getCountryByCountryCode(countryCode)
         setState { copy(country = country, countryCode = countryCode) }
     }
 

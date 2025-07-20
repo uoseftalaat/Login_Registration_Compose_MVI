@@ -13,7 +13,7 @@ class CountryRepositoryImpl(
         return remoteDataSource.getCountries().map {it.toDomain()}
     }
 
-    override suspend fun getCountryById(id: String): Country {
-        return remoteDataSource.getCountryById(id).toDomain()
+    override suspend fun getCountryByCountryCode(countryCode: String): Country {
+        return remoteDataSource.getCountryById(countryCode).toDomain()
     }
 }

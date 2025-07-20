@@ -2,6 +2,7 @@ package com.example.task_prp.ui.screen.signupscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
@@ -23,7 +24,7 @@ import org.mockito.Mockito
 class SignUpViewModelTest {
 
     @Mock
-    private lateinit var repository: CountryRepository
+    private lateinit var getCountryByCountryCode: GetCountryByCountryCode
 
     @Mock
     private lateinit var savedStateHandle: SavedStateHandle
@@ -42,11 +43,11 @@ class SignUpViewModelTest {
     @BeforeEach
     fun setup(){
         signUpViewModel = SignUpViewModel(
-            repository,
-            savedStateHandle,
+            getCountryByCountryCode,
             phoneNumberValidatorUseCase,
             emailValidatorUseCase,
-            nameValidatorUseCase
+            nameValidatorUseCase,
+            savedStateHandle
         )
     }
 
@@ -180,16 +181,12 @@ class SignUpViewModelTest {
         )
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
+            Mockito.`when`(getCountryByCountryCode(Mockito.anyString())).then {
                 country
             }
         }
 
         signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.countryCode))
-
-        runBlocking {
-            Mockito.verify(repository).getCountryById(country.countryCode)
-        }
 
         assertThat(signUpViewModel.currentState.country).isEqualTo(
             country
@@ -203,16 +200,12 @@ class SignUpViewModelTest {
         )
 
         runBlocking {
-            Mockito.`when`(repository.getCountryById(Mockito.anyString())).then {
+            Mockito.`when`(getCountryByCountryCode(Mockito.anyString())).then {
                 country
             }
         }
 
         signUpViewModel.setIntent(SignUpContract.SignUpIntent.OnFlagChange(country.countryCode))
-
-        runBlocking {
-            Mockito.verify(repository).getCountryById(country.countryCode)
-        }
 
         assertThat(signUpViewModel.currentState.countryCode).isEqualTo(
             country.countryCode
