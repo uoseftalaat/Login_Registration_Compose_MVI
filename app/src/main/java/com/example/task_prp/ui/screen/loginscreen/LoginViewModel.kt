@@ -3,6 +3,7 @@ package com.example.task_prp.ui.screen.loginscreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.domain.businessusecase.validator.PasswordValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
@@ -12,7 +13,7 @@ import com.example.task_prp.ui.screen.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: CountryRepository,
+    private val getCountryByCountryCode: GetCountryByCountryCode,
     private val passwordValidatorUseCase: PasswordValidatorUseCase,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
     savedStateHandle: SavedStateHandle,
@@ -82,7 +83,7 @@ class LoginViewModel(
     }
 
     private fun onDefaultCountryChange(countryCode:String?) = viewModelScope.launch {
-            val country = repository.getCountryById(countryCode ?: "EG")
+            val country = getCountryByCountryCode(countryCode ?: "EG")
             setState { copy(country = country, countryCode = countryCode ?: "EG") }
     }
 

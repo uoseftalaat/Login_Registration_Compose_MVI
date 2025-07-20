@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.task_prp.domain.businessusecase.countryusecase.GetAllCountries
 import com.example.task_prp.domain.model.Country
 import com.example.task_prp.domain.repository.CountryRepository
 import com.example.task_prp.ui.connectivity.ConnectivityObserver
@@ -13,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CountryPickerViewModel(
-    private val repository: CountryRepository,
+    private val getAllCountries: GetAllCountries,
     private val connectionObserver:ConnectivityObserver,
     savedStateHandle: SavedStateHandle
 ):BaseViewModel<
@@ -40,7 +41,7 @@ class CountryPickerViewModel(
     fun getCountries(selectedCountryCode:String){
         setState { copy(isLoading = true) }
         viewModelScope.launch {
-            val countries = repository.getAllCountries()
+            val countries = getAllCountries()
             countries.forEach {
                     country: Country ->  country.isPicked = country.countryCode == selectedCountryCode
             }

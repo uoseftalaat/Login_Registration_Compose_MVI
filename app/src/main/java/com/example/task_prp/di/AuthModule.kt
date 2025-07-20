@@ -26,14 +26,6 @@ val authModule = module {
             .build()
     }
 
-    single<CountryRepository> {
-        CountryRepositoryImpl(get())
-    }
-
-    single<CountryRemoteDataSource> {
-        CountryRemoteDataSourceImpl(get())
-    }
-
     single { EmailValidatorUseCase() }
 
     single<ConnectivityObserver>{
