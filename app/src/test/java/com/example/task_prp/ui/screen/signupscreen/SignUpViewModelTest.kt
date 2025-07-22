@@ -2,8 +2,7 @@ package com.example.task_prp.ui.screen.signupscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
-import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCodeUseCase
 import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
@@ -24,7 +23,7 @@ import org.mockito.Mockito
 class SignUpViewModelTest {
 
     @Mock
-    private lateinit var getCountryByCountryCode: GetCountryByCountryCode
+    private lateinit var getCountryByCountryCode: GetCountryByCountryCodeUseCase
 
     @Mock
     private lateinit var savedStateHandle: SavedStateHandle

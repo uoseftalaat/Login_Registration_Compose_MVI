@@ -3,8 +3,7 @@ package com.example.task_prp.ui.screen.signupscreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
-import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCodeUseCase
 import com.example.task_prp.domain.businessusecase.validator.EmailValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.NameValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
@@ -14,7 +13,7 @@ import com.example.task_prp.ui.screen.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val getCountryByCountryCode: GetCountryByCountryCode,
+    private val getCountryByCountryCode: GetCountryByCountryCodeUseCase,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase,
     private val emailValidatorUseCase: EmailValidatorUseCase,
     private val nameValidatorUseCase: NameValidatorUseCase,
