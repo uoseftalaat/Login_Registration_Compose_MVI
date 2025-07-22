@@ -2,8 +2,7 @@ package com.example.task_prp.ui.screen.countrypickerScreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.domain.businessusecase.countryusecase.GetAllCountries
-import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.countryusecase.GetAllCountriesUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -21,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 class CountryPickerViewModelTest {
 
     @Mock
-    private lateinit var getAllCountries: GetAllCountries
+    private lateinit var getAllCountries: GetAllCountriesUseCase
 
     @Mock
     private lateinit var savedStateHandle: SavedStateHandle

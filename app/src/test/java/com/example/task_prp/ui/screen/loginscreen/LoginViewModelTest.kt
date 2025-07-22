@@ -2,8 +2,7 @@ package com.example.task_prp.ui.screen.loginscreen
 
 import androidx.lifecycle.SavedStateHandle
 import com.example.task_prp.TestDispatcherExtension
-import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCode
-import com.example.task_prp.domain.repository.CountryRepository
+import com.example.task_prp.domain.businessusecase.countryusecase.GetCountryByCountryCodeUseCase
 import com.example.task_prp.domain.businessusecase.validator.PasswordValidatorUseCase
 import com.example.task_prp.domain.businessusecase.validator.PhoneNumberValidatorUseCase
 import com.google.common.truth.Truth.assertThat
@@ -23,7 +22,7 @@ import org.mockito.Mockito
 class LoginViewModelTest {
 
     @Mock
-    private lateinit var getCountryByCountryCode: GetCountryByCountryCode
+    private lateinit var getCountryByCountryCode: GetCountryByCountryCodeUseCase
 
     @Mock
     private lateinit var savedStateHandle: SavedStateHandle
