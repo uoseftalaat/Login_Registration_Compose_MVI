@@ -10,12 +10,9 @@ class PhoneNumberValidatorUseCase(
     operator fun invoke(phoneNumber:String,countryCode:String): UseCaseResult {
 
         try {
-            val regionCode = phoneNumberUtil.getRegionCodeForCountryCode(
-                countryCode.toInt()
-            )
-            val parsedNumber: Phonenumber.PhoneNumber = phoneNumberUtil.parse(phoneNumber, regionCode)
+            val parsedNumber: Phonenumber.PhoneNumber = phoneNumberUtil.parse(phoneNumber, countryCode)
 
-            val result = phoneNumberUtil.isValidNumberForRegion(parsedNumber, regionCode)
+            val result = phoneNumberUtil.isValidNumberForRegion(parsedNumber, countryCode)
 
             return if(result)
                 UseCaseResult(true)
