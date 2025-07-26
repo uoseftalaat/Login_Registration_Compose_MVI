@@ -30,13 +30,9 @@ class PhoneNumberValidatorUseCaseTest1{
     @Test
     fun `when user enter phone number correctly then return true`(){
         val phoneNumber = "01034578323"
-        val countryCode = "20"
+        val countryCode = "EG"
 
         val parsedNumber: Phonenumber.PhoneNumber = Phonenumber.PhoneNumber()
-
-        Mockito.`when`(phoneNumberUtil.getRegionCodeForCountryCode(20)).then {
-            "20"
-        }
 
         Mockito.`when`(phoneNumberUtil.parse(phoneNumber,countryCode)).then {
             Phonenumber.PhoneNumber()
