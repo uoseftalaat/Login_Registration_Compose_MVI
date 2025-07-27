@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.task_prp.R
+import com.example.task_prp.ui.screen.loginscreen.LoginTestTags
 
 @Composable
 fun AppTextField(
@@ -31,7 +33,8 @@ fun AppTextField(
     onIconClick: () -> Unit = {},
     onValueChanges: (String) -> Unit,
     isError:Boolean = false,
-    errorMessage:String = ""
+    errorMessage:String = "",
+    modifier: Modifier = Modifier
 ) {
     Column {
         Text(
@@ -56,7 +59,7 @@ fun AppTextField(
             trailingIcon = {
                 TrailingIconView(isPassword,onIconClick)
             },
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             visualTransformation = if(isPasswordHidden) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = if(isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(keyboardType = KeyboardType.Text)
@@ -76,7 +79,8 @@ fun TrailingIconView(
 ) {
     if(isPassword) {
         IconButton(
-            onClick = onIconClick
+            onClick = onIconClick,
+            Modifier.testTag(LoginTestTags.SHOW_PASSWORD_BUTTON_TEST_TAG)
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.passwordview),

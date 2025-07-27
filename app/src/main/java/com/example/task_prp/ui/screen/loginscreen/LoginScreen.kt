@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -98,7 +99,8 @@ fun LoginContent(
                 setIntent(LoginContract.LoginIntent.OnCountryPickerClick(countryCode))
             },
             isError = state.isPhoneValid?.not() ?: false,
-            errorMessage = state.phoneError
+            errorMessage = state.phoneError,
+            modifier = Modifier.testTag(LoginTestTags.PHONE_TEST_TAG)
         )
         Spacer(
             Modifier.size(20.dp)
@@ -116,14 +118,16 @@ fun LoginContent(
                 setIntent(LoginContract.LoginIntent.OnPasswordChange(newPassword))
             },
             isError = state.isPasswordValid?.not() ?: false,
-            errorMessage = state.passwordError
+            errorMessage = state.passwordError,
+            modifier = Modifier.testTag(LoginTestTags.PASSWORD_TEST_TAG)
         )
         Spacer(
             Modifier.weight(1f)
         )
         AppButton(
             buttonName = stringResource(R.string.continue_button),
-            isEnabled = state.isProcessButtonEnabled
+            isEnabled = state.isProcessButtonEnabled,
+            modifier = Modifier.testTag(LoginTestTags.LOGIN_BUTTON_TEST_TAG)
         ) {
             setIntent(LoginContract.LoginIntent.OnLoginClick)
         }
@@ -140,7 +144,8 @@ fun LoginContent(
             TextButton(
                 {
                     setIntent(LoginContract.LoginIntent.OnCreateAccountClick(state.countryCode ?: "EG"))
-                }
+                },
+                modifier = Modifier.testTag(LoginTestTags.CREATE_ACCOUNT_BUTTON_TEST_TAG)
             ) {
                 Text(
                     stringResource(R.string.create_account),

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 fun AppButton(
     buttonName:String,
     isEnabled:Boolean = true,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Button(
@@ -25,7 +26,7 @@ fun AppButton(
             disabledContainerColor = Color.LightGray
         ),
         enabled = isEnabled,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
