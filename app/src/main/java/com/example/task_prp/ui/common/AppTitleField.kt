@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.task_prp.R
+import com.example.task_prp.ui.screen.signupscreen.SignUpTestTag
 
 @Composable
 fun AppTitleField(
@@ -29,7 +31,8 @@ fun AppTitleField(
             .fillMaxWidth()
     ) {
         IconButton(
-            onBackIconClick
+            onBackIconClick,
+            Modifier.testTag(SignUpTestTag.BACK_BUTTON_TEST_TAG)
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.backarrow),

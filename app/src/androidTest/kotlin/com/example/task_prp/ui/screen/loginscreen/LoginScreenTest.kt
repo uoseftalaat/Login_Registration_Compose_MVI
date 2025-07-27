@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -77,16 +78,26 @@ class LoginScreenTest {
             var password by remember {
                 mutableStateOf("")
             }
+            var isPhoneEmpty by remember { mutableStateOf(true) }
+            var isPasswordEmpty by remember { mutableStateOf(true) }
             LoginContent(
                 state = LoginContract.LoginState(
                     phoneNumber = phone,
-                    password = password
+                    password = password,
+                    isPhoneEmpty = isPhoneEmpty,
+                    isPasswordEmpty = isPasswordEmpty
                 )
             ){
                 intent ->
                 when(intent){
-                    is LoginContract.LoginIntent.OnPhoneNumberChange -> phone = intent.newPhoneNumber
-                    is LoginContract.LoginIntent.OnPasswordChange -> password = intent.newPassword
+                    is LoginContract.LoginIntent.OnPhoneNumberChange -> {
+                        isPhoneEmpty = intent.newPhoneNumber.isEmpty()
+                        phone = intent.newPhoneNumber
+                    }
+                    is LoginContract.LoginIntent.OnPasswordChange -> {
+                        isPasswordEmpty = intent.newPassword.isEmpty()
+                        password = intent.newPassword
+                    }
                     else -> {}
                 }
 
@@ -97,6 +108,52 @@ class LoginScreenTest {
         composeRule.onNodeWithTag(LoginTestTags.PHONE_TEST_TAG).performTextInput(phoneText)
         composeRule.onNodeWithTag(LoginTestTags.PASSWORD_TEST_TAG).performTextInput(passwordText)
         composeRule.onNodeWithTag(LoginTestTags.LOGIN_BUTTON_TEST_TAG).assertIsNotEnabled()
+    }
+
+
+    @Test
+    fun whenEnteringPhoneAndPassword_ThenButtonIsEnabled(){
+        composeRule.setContent {
+            var phone by remember {
+                mutableStateOf("")
+            }
+            var password by remember {
+                mutableStateOf("")
+            }
+            var isPhoneEmpty by remember { mutableStateOf(true) }
+            var isPasswordEmpty by remember { mutableStateOf(true) }
+            var isButtonEnabled by remember { mutableStateOf(false) }
+            LoginContent(
+                state = LoginContract.LoginState(
+                    phoneNumber = phone,
+                    password = password,
+                    isPhoneEmpty = isPhoneEmpty,
+                    isPasswordEmpty = isPasswordEmpty,
+                    isProcessButtonEnabled = isButtonEnabled
+                )
+            ){ intent ->
+
+                when(intent){
+                    is LoginContract.LoginIntent.OnPhoneNumberChange -> {
+                        isPhoneEmpty = intent.newPhoneNumber.isEmpty()
+                        phone = intent.newPhoneNumber
+                        isButtonEnabled = (!isPhoneEmpty && !isPasswordEmpty)
+                    }
+                    is LoginContract.LoginIntent.OnPasswordChange -> {
+                        isPasswordEmpty = intent.newPassword.isEmpty()
+                        password = intent.newPassword
+                        isButtonEnabled = (!isPhoneEmpty && !isPasswordEmpty)
+                    }
+                    else -> {}
+                }
+
+            }
+        }
+        val phoneText = "0100"
+        val passwordText = "password"
+        composeRule.onNodeWithTag(LoginTestTags.PHONE_TEST_TAG).performTextInput(phoneText)
+        composeRule.onNodeWithTag(LoginTestTags.PASSWORD_TEST_TAG).performTextInput(passwordText)
+        composeRule.onNodeWithTag(LoginTestTags.LOGIN_BUTTON_TEST_TAG).assertIsEnabled()
     }
 
     @Test
@@ -273,8 +330,6 @@ class LoginScreenTest {
 
         composeRule.onNodeWithText("phone Number not valid").assertExists()
     }
-
-    //Todo(the phone is not correct case)
 
 
 }

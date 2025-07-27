@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,8 +66,6 @@ fun SignUpContent(
     setIntent:(SignUpContract.SignUpIntent) -> Unit,
 ) {
 
-
-
     Column (
         modifier = modifier.padding(top = 20.dp)
     ){
@@ -80,7 +79,6 @@ fun SignUpContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(horizontal = 20.dp)
         ) {
-
             Spacer(
                 Modifier.size(4.dp)
             )
@@ -103,7 +101,8 @@ fun SignUpContent(
                     setIntent(SignUpContract.SignUpIntent.OnNameChange(name))
                 },
                 isError = state.isNameValid?.not() ?: false,
-                errorMessage = state.nameError
+                errorMessage = state.nameError,
+                modifier = Modifier.testTag(SignUpTestTag.NAME_TEST_TAG)
             )
 
             AppTextField(
@@ -114,7 +113,8 @@ fun SignUpContent(
                     setIntent(SignUpContract.SignUpIntent.OnSurNameChange(surName))
                 },
                 isError = state.isSurNameValid?.not() ?: false,
-                errorMessage = state.surNameError
+                errorMessage = state.surNameError,
+                modifier = Modifier.testTag(SignUpTestTag.SUR_NAME_TEST_TAG)
             )
 
             AppTextField(
@@ -125,7 +125,8 @@ fun SignUpContent(
                     setIntent(SignUpContract.SignUpIntent.OnEmailChange(email))
                 },
                 isError = state.isEmailValid?.not() ?: false,
-                errorMessage = state.emailError
+                errorMessage = state.emailError,
+                modifier = Modifier.testTag(SignUpTestTag.EMAIL_TEST_TAG)
             )
 
             AppPhoneField(
@@ -144,7 +145,7 @@ fun SignUpContent(
                 },
                 isError = state.isPhoneNumberValid?.not() ?: false,
                 errorMessage = state.phoneError,
-                modifier = Modifier
+                modifier = Modifier.testTag(SignUpTestTag.PHONE_TEST_TAG)
             )
             Spacer(
                 Modifier.weight(1f)
@@ -153,6 +154,7 @@ fun SignUpContent(
             AppButton(
                 "Confirm",
                 state.isCreateAccountButtonEnabled,
+                modifier = Modifier.testTag(SignUpTestTag.CONFIRM_BUTTON_TEST_TAG)
             ) {
                 setIntent(SignUpContract.SignUpIntent.OnConfirmClick)
             }
