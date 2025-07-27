@@ -143,7 +143,8 @@ fun SignUpContent(
                     setIntent(SignUpContract.SignUpIntent.OnCountryPickClick(state.country?.countryCode ?: "EG"))
                 },
                 isError = state.isPhoneNumberValid?.not() ?: false,
-                errorMessage = state.phoneError
+                errorMessage = state.phoneError,
+                modifier = Modifier
             )
             Spacer(
                 Modifier.weight(1f)

@@ -17,11 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.task_prp.domain.model.Country
+import com.example.task_prp.ui.screen.loginscreen.LoginTestTags
 
 
 @Composable
@@ -31,7 +33,8 @@ fun AppPhoneField(
     onValueChange:(String) ->Unit,
     onPickFlagClick:(String) -> Unit,
     isError:Boolean = false,
-    errorMessage:String = ""
+    errorMessage:String = "",
+    modifier: Modifier = Modifier
 ) {
     Column {
         OutlinedTextField(
@@ -59,6 +62,7 @@ fun AppPhoneField(
                         .clickable {
                             onPickFlagClick(country.countryCode)
                         }
+                        .testTag(LoginTestTags.FLAG_ICON_TEST_TAG)
                 ) {
 //                    Image(
 //                        painter = painterResource(country.icon),
@@ -79,7 +83,7 @@ fun AppPhoneField(
                     )
                 }
             },
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
             ,keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
@@ -104,6 +108,7 @@ private fun Preview() {
             "\uD83C\uDDE6\uD83C\uDDEA"
         ),
         {},
-        {}
+        {},
+        modifier = Modifier
     )
 }

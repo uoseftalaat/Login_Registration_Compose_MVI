@@ -13,6 +13,21 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+      <SelectionState runConfigName="LoginScreenTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingOnTheFlagIcon_ThenCountryPickerIntentIsSent()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingOnTheLoginButton_ThenLoginIntentIsSent()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingOnTheLoginButtonAndPasswordIsNotValid_ThenPasswordErrorIsShown()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingOnTheLoginButtonAndPhoneIsNotValid_ThenPhoneErrorIsShown()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
