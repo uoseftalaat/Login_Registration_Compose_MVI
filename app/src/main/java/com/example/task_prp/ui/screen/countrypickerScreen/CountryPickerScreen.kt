@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,7 +73,8 @@ fun ContentChooser(
             ) {
                 CircularProgressIndicator(
                     color = MaterialTheme.colorScheme.primary,
-                    strokeWidth = 4.dp
+                    strokeWidth = 4.dp,
+                    modifier = Modifier.testTag("loadingIndicator")
                 )
             }
         }
@@ -99,12 +101,13 @@ fun CountryPickerContent(
             setIntent(CountryPickerContract.CountryPickerIntent.OnBackClick(state.selectedCountryCode))
         }
 
-        LazyColumn {
+        LazyColumn(
+            Modifier.testTag("scroll")
+        ) {
             items(state.countries){ country ->
                 AppCountryCode(country = country){
                     val countryId = country.countryCode
                     setIntent(CountryPickerContract.CountryPickerIntent.OnCountryClick(countryId))
-
                 }
             }
         }
@@ -114,7 +117,7 @@ fun CountryPickerContent(
 @Composable
 fun NoInternetView(modifier: Modifier = Modifier) {
     Column(
-        modifier.fillMaxSize(),
+        modifier.fillMaxSize().testTag("NoInternetView"),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -128,7 +131,7 @@ fun NoInternetView(modifier: Modifier = Modifier) {
         )
 
         Text(
-            "The internet is not connected",
+            "internet is not connected",
             fontSize = 16.sp,
             color = Color.Red
         )
