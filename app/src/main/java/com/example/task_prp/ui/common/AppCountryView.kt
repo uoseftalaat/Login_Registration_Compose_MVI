@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,11 +29,7 @@ fun AppCountryCode(
     country: Country,
     onCountrySelected:()-> Unit
 ) {
-    Column(
-        Modifier.clickable {
-            onCountrySelected()
-        }
-    ) {
+    Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -40,12 +37,12 @@ fun AppCountryCode(
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(8.dp)
+                .clickable{
+                    onCountrySelected()
+                }
+                .testTag("countryClick")
         ) {
-//            Image(
-//                painter = painterResource(country.icon),
-//                contentDescription = "flag for ${country.countryName}",
-//                modifier = Modifier.padding(8.dp)
-//            )
+
             Text(
                 text = country.icon,
                 fontSize = 25.sp

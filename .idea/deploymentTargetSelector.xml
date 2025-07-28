@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="SignUpScreenTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="whenEnteringPhoneAndPassword_ThenButtonIsEnabled()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="whenTextFieldsHasValues_thenConfirmButtonIsEnabled()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenNameIsNotValid_ThenNameErrorShows()">
+      <SelectionState runConfigName="whenNavigatingToCountryPickerScreen_ThenLoadingIndicatorIsDisplayed()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="whenPhoneIsNotValid_ThenPhoneErrorShows()">
+      <SelectionState runConfigName="whenInternetIsNotConnected_ThenNoInternetViewIsDisplayed()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingBack_ThenBackIntentIsFired()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="whenClickingCountry_ThenCountryIntentIsFired()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
